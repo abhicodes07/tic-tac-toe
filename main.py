@@ -1,5 +1,5 @@
 import random
-# import time 
+from time import sleep
 # import array
 import numpy as np 
 
@@ -7,6 +7,7 @@ import numpy as np
 PLAYER = 'X'
 COMPUTER = 'O'
 WINNER = ' '
+
 # setting up board using numpy 2d array
 board = np.zeros([3, 3], dtype=str)
 
@@ -18,13 +19,13 @@ def setBoard():
 
 # printing board
 def printBoard():
-    print(f"{board[0][0]}  |  {board[0][1]}| {board[0][2]}")
+    print(f"{board[0][0]}  | {board[0][1]} | {board[0][2]}")
     print("---|---|---")
 
-    print(f"{board[1][0]}  |  {board[1][1]}| {board[1][2]}")
+    print(f"{board[1][0]}  | {board[1][1]} | {board[1][2]}")
     print("---|---|---")
 
-    print(f"{board[2][0]}  |  {board[2][1]}| {board[2][2]}")
+    print(f"{board[2][0]}  | {board[2][1]} | {board[2][2]}")
     print()
 
 # checking if there's any free space on the board
@@ -39,6 +40,7 @@ def checkfreeSpace():
 
 # Player moves on the board
 def playerMove():
+    print("\n--> YOUR TURN!")
     r = int(input("Enter the row #0-3: "))
     c = int(input("Enter the columun #0-3: "))
     if board[r][c] != ' ':
@@ -49,12 +51,14 @@ def playerMove():
             break
 def computerMove():
     
-    print("computer turn: ")
+    print("\n--> COMPUTER TURN: ")
     r = random.randint(0, 2)
+    sleep(1)
     print(f"Row: {r}")
     c = random.randint(0, 2)
+    sleep(1)
     print(f"Column: {c}")
-    
+
     if checkfreeSpace() >  0:
         if board[r][c] != ' ':
             print("Invalid move: ")
@@ -71,22 +75,23 @@ def checkWinner():
     # Checking rows
     for i in range(3):
         if board[i][0] == board[i][1] and board[i][0] == board[i][2]:
-            print(f"Winner: {board[i][0]}")
+            print(f"Winner: {board[i][0]}\n")
             return(board[i][0])
     
     # Checking column
     for j in range(3):
         if board[0][j] == board[1][j] and board[0][j] == board[2][j]:
-            print(f"Winner: {board[0][j]}")
+            print(f"Winner: {board[0][j]}\n")
             return(board[0][j])
     
     # Checking Diagonals
     if board[0][0] == board[1][1] and board[0][0] == board[2][2]:
-        print(f"Winner: {board[0][0]}")
+        print(f"Winner: {board[0][0]}\n")
         return(board[0][0])
-    if board[2][2] == board[1][1] and board[2][2] == board[2][0]:
-        print(f"Winner: {board[2][2]}")
-        return(board[2][2])
+
+    elif board[0][2] == board[1][1] and board[0][2] == board[2][0]:
+        print(f"Winner: {board[0][2]}\n")
+        return(board[0][2])
 
 def printWinner(WINNER):
     if WINNER == PLAYER:
@@ -94,18 +99,24 @@ def printWinner(WINNER):
     elif WINNER == COMPUTER:
         print("YOU LOSE!\n")
     else:
-        print("IT'S A TIE.")
+        print("IT'S A TIE.\n")
 
 # Main
 if __name__ == "__main__":
     setBoard()
-    while WINNER == ' ' or checkfreeSpace() != 0:
+    while WINNER == ' ' and checkfreeSpace() != 0:
         printBoard()
+
         playerMove()
-        computerMove()
         WINNER = checkWinner()
-        if WINNER != ' ' or checkfreeSpace() == 1:
+        if WINNER != ' ' or checkfreeSpace() == 0:
             printWinner(WINNER)
             break
-        
+
+        computerMove()
+        WINNER = checkWinner()
+        if WINNER != ' ' or checkfreeSpace() == 0:
+            printWinner(WINNER)
+            break
+
 
