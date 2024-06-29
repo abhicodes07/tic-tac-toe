@@ -1,6 +1,5 @@
 import random
 from time import sleep
-# import array
 import numpy as np 
 
 # Assigning symbols to each player globally
@@ -59,17 +58,14 @@ def computerMove():
     sleep(1)
     print(f"Column: {c}")
 
-    if checkfreeSpace() >  0:
-        if board[r][c] != ' ':
-            print("Invalid move: ")
-            computerMove()
+    
+    if board[r][c] != ' ':
+        print("Invalid move: ")
+        computerMove()
 
-        else: 
-            while board[r][c] == ' ':
-                board[r][c] = COMPUTER
-                break
-    else:
-        print("w")
+    while board[r][c] == ' ':
+        board[r][c] = COMPUTER
+        break
 
 def checkWinner():
     # Checking rows
@@ -92,14 +88,24 @@ def checkWinner():
     elif board[0][2] == board[1][1] and board[0][2] == board[2][0]:
         print(f"Winner: {board[0][2]}\n")
         return(board[0][2])
-
+    
+    else:
+        print(f"Winner: {WINNER}")
+        return WINNER
+    
 def printWinner(WINNER):
     if WINNER == PLAYER:
-        print("YOU WIN!\n")
+        print("\n-- LAST BOARD --")
+        printBoard()
+        print("\n -- YOU WIN! --\n")
     elif WINNER == COMPUTER:
-        print("YOU LOSE!\n")
+        print("\n -- LAST BOARD --")
+        printBoard()
+        print("\n -- YOU LOSE! --\n")
     else:
-        print("IT'S A TIE.\n")
+        print("\n -- LAST BOARD --")
+        printBoard()
+        print("\n-- IT'S A TIE. --\n")
 
 # Main
 if __name__ == "__main__":
@@ -108,6 +114,7 @@ if __name__ == "__main__":
         printBoard()
 
         playerMove()
+        # if checkWinner() == ' ' 
         WINNER = checkWinner()
         if WINNER != ' ' or checkfreeSpace() == 0:
             printWinner(WINNER)
