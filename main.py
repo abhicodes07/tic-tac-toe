@@ -3,12 +3,12 @@ from time import sleep
 import numpy as np 
 
 # Assigning symbols to each player globally
-PLAYER = 'X'
-COMPUTER = 'O'
-WINNER = ' '
+PLAYER: str = 'X'
+COMPUTER: str = 'O'
+WINNER: str = ' '
 
 # setting up board using numpy 2d array
-board = np.zeros([3, 3], dtype=str)
+board: int = np.zeros([3, 3], dtype=str)
 
 # assigning empty blocks on board
 def setBoard():
@@ -17,7 +17,7 @@ def setBoard():
             board[i][j] = ' '
 
 # printing board
-def printBoard():
+def printBoard() -> None:
     print(f"{board[0][0]}  | {board[0][1]} | {board[0][2]}")
     print("---|---|---")
 
@@ -28,7 +28,7 @@ def printBoard():
     print()
 
 # checking if there's any free space on the board
-def checkfreeSpace():
+def checkfreeSpace() -> int:
     emptyblock = 9
     for i in range(3):
         for j in range(3):
@@ -38,7 +38,7 @@ def checkfreeSpace():
     return(emptyblock)
 
 # Player moves on the board
-def playerMove():
+def playerMove() -> int:
     print("\n--> YOUR TURN!")
     r = int(input("Enter the row #0-3: "))
     c = int(input("Enter the columun #0-3: "))
@@ -48,8 +48,10 @@ def playerMove():
     while board[r][c] == ' ':
             board[r][c] = PLAYER
             break
-def computerMove():
     
+# Computer's move 
+# Generating random number i.e., the indexes of empty blocks
+def computerMove() -> int:  
     print("\n--> COMPUTER TURN: ")
     r = random.randint(0, 2)
     sleep(1)
@@ -67,7 +69,8 @@ def computerMove():
         board[r][c] = COMPUTER
         break
 
-def checkWinner():
+# Checking winner on grid
+def checkWinner() -> int:
     # Checking rows
     for i in range(3):
         if board[i][0] == board[i][1] and board[i][0] == board[i][2]:
@@ -93,7 +96,8 @@ def checkWinner():
         print(f"Winner: {WINNER}")
         return WINNER
     
-def printWinner(WINNER):
+# printing winner
+def printWinner(WINNER: str) -> str:
     if WINNER == PLAYER:
         print("\n-- LAST BOARD --")
         printBoard()
