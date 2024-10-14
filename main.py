@@ -2,6 +2,7 @@ import random
 from time import sleep
 import numpy as np 
 
+# Constants
 # Assigning symbols to each player globally
 PLAYER: str = 'X'
 COMPUTER: str = 'O'
